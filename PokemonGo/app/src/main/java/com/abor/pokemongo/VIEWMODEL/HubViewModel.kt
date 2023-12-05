@@ -7,7 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abor.pokemongo.MODEL.API.ApiClient
-import com.abor.pokemongo.MODEL.API.Official_artwork
+import com.abor.pokemongo.MODEL.API.Home
+
 import com.abor.pokemongo.MODEL.API.Other
 import com.abor.pokemongo.MODEL.API.Poked
 import com.abor.pokemongo.MODEL.API.PokemonDetail
@@ -29,11 +30,25 @@ class HubViewModel : ViewModel() {
         Nullable(), mutableListOf(TypElement("water","b"))))
     val _typePokemon : State<TypePokemon> = typePokemon
 
-    var byTypePokemon = mutableStateOf(Pokemons(mutableListOf(
-        Poked(TypElement(  "pidgey","https://pokeapi.co/api/v2/pokemon/16/"),1)
-    )))
 
-    val _byTypePokemon : State<Pokemons> = byTypePokemon
+    var pokemonsbytypelist = mutableStateOf(mutableListOf<Pokemons>())
+    val _pokemonsbytypelist:State<MutableList<Pokemons>> = pokemonsbytypelist
+    var detailPokemon = mutableStateOf(
+        PokemonDetail(
+            1,
+            "",
+            1,
+            1,
+            mutableListOf(move(TypElement("",""))),
+            TypElement("",""),
+            Sprites(Other(Home(""))),
+            1
+        )
+    )
+    val _detailPokemon : State<PokemonDetail> = detailPokemon
+
+
+
     //ici une variable state lié au dégradé de chaque type qui se trouve dans ColorType
     var horizontalGradient = mutableStateOf("normal")
     val _horizontalGradient : State<String> =horizontalGradient

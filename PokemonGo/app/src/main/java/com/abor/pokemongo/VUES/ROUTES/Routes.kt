@@ -7,6 +7,7 @@ package com.abor.pokemongo.VUES.ROUTES
 sealed class Routes(val destination : String =""){
 
     object welcome : Routes("Welcome")
-    object pokemonPage : Routes("PokemonsPage")
+
     object splash : Routes("Splash")
+    object pokemonDetailPage : Routes("PokemonDetailPage")
 }

@@ -18,14 +18,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.abor.myapplication.VUES.Splash.Splash
+import com.abor.myapplication.VUES.Splash.Splash3
 import com.abor.myapplication.VUES.Welcome.Welcome
 import com.abor.pokemongo.VIEWMODEL.HubViewModel
+import com.abor.pokemongo.VUES.POKEMONS.PokemonDetailPage
 
-import com.abor.pokemongo.VUES.POKEMONS.PokemonsPage
+
 
 import com.abor.pokemongo.VUES.ROUTES.Routes
 import com.abor.pokemongo.ui.theme.PokemonGoTheme
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -48,8 +52,11 @@ class MainActivity : ComponentActivity() {
             dest.value = Routes.splash.destination
             LaunchedEffect(true ){
 
-                scope.launch {
+                scope.async {
                     hubViewModel.typePokemon.value = hubViewModel.executeGetAllPokemonType()
+                    hubViewModel._typePokemon.value.results.forEach{pok->
+                        hubViewModel.pokemonsbytypelist.value.add(hubViewModel.executeGetAllPokemonByType(hubViewModel.extraireEntier(pok.url)!!))
+                    }
                     navController.navigate(Routes.welcome.destination,)
                     dest.value = Routes.welcome.destination
                 }
@@ -66,15 +73,16 @@ class MainActivity : ComponentActivity() {
 
 
                    }
-                    composable(Routes.pokemonPage.destination)
-                    {
 
-                        PokemonsPage(scope, navController, hubViewModel)
-                    }
 
                     composable(Routes.splash.destination)
                     {
-                        Splash()
+                        Splash3 ()
+                    }
+
+                    composable(Routes.pokemonDetailPage.destination)
+                    {
+                        PokemonDetailPage( navController,hubViewModel)
                     }
 
 

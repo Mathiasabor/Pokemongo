@@ -1,12 +1,7 @@
 package com.abor.pokemongo.VUES.POKEMONS
 
-/*
-* Ce composant est la page qui affiche la liste des pokemons par type
-*
-* */
-
-
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,38 +16,40 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.abor.myapplication.VUES.Splash.Splash
+import com.abor.myapplication.VUES.Splash.Splash2
 import com.abor.pokemongo.R
-
 import com.abor.pokemongo.VIEWMODEL.HubViewModel
 import com.abor.pokemongo.VUES.POKEMONS.Component.PokeElement
 import com.abor.pokemongo.VUES.ROUTES.Routes
-import kotlinx.coroutines.CoroutineScope
 
 
 @Composable
-fun PokemonsPage(scope: CoroutineScope, Nav : NavController, hubViewModel: HubViewModel){
 
+fun PokemonDetailPage( Nav : NavController, hubViewModel: HubViewModel)
+{
     Box (modifier = Modifier.fillMaxSize())
     {
-        Splash()
+        Splash2()
 
         Column {
 
             Row (horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-                ){
+                modifier = Modifier
+                    .background(color = Color.Red)
+                    .fillMaxWidth()
+            ){
                 Column(
 
                     modifier = Modifier
                         .padding(20.dp)
-                        )
+                )
                 {
 
                     IconButton(onClick = { Nav.navigate(Routes.welcome.destination){
@@ -67,22 +64,18 @@ fun PokemonsPage(scope: CoroutineScope, Nav : NavController, hubViewModel: HubVi
                     horizontalAlignment = Alignment.End,
                     modifier = Modifier
                         .padding(20.dp)
-                        )
+                )
                 {
-                    Text(text = hubViewModel._horizontalGradient.value, fontSize = 30.sp, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold)
-                    Text(text = "${hubViewModel._horizontalGradient.value} PokéMoN List", fontSize = 20.sp)
+                    Text(text = hubViewModel._horizontalGradient.value, fontSize = 30.sp, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold, color = Color.White)
                 }
 
             }
 
-
-            LazyColumn(modifier = Modifier.padding(20.dp))
-            {
-                items(hubViewModel._byTypePokemon.value.pokemon)
-                {poke->
-                    PokeElement(poke, hubViewModel, scope)
-                }
+            Column ( modifier = Modifier
+                .padding(20.dp)){
+                PokeElement(hubViewModel)
             }
+
         }
 
     }

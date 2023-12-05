@@ -21,6 +21,7 @@ data class TypElement(
 
 //cette partie représente la liste des pokemon retourné par Type
 data class Pokemons(
+    val name : String,
    @SerializedName("pokemon") val pokemon: List<Poked>
 )
 
@@ -51,11 +52,11 @@ data class Sprites(
 )
 
 data class Other(
-    @SerializedName("official-artwork") val official_artwork : Official_artwork
+    @SerializedName("home") val home : Home
 )
 
-data class Official_artwork(
-    val front_shiny : String
+data class Home(
+    val front_default : String
 
 )
 

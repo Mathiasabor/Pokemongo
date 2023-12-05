@@ -48,18 +48,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
+
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.abor.pokemongo.MODEL.API.Official_artwork
-import com.abor.pokemongo.MODEL.API.Other
-import com.abor.pokemongo.MODEL.API.Poked
-import com.abor.pokemongo.MODEL.API.PokemonDetail
-import com.abor.pokemongo.MODEL.API.Sprites
-import com.abor.pokemongo.MODEL.API.TypElement
-import com.abor.pokemongo.MODEL.API.move
+
+
+
 import com.abor.pokemongo.VIEWMODEL.HubViewModel
 
 import kotlinx.coroutines.CoroutineScope
@@ -68,28 +64,15 @@ import com.abor.pokemongo.R
 import com.abor.pokemongo.VUES.WELCOME.Component.ColorType
 
 //cet objet sert à mettre detailpokemon à afficher
-object PokeElement {
-    var detailPokemon = mutableStateOf(
-        PokemonDetail(
-            1,
-            "",
-            1,
-            1,
-            mutableListOf(move(TypElement("",""))),
-            TypElement("",""),
-            Sprites(Other(Official_artwork(""))),
-            1
-        )
-    )
 
-    val _detailPokemon : State<PokemonDetail> = detailPokemon
-}
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScope)
+fun PokeElement( hubViewModel: HubViewModel)
 {
-    val expanded = remember{ mutableStateOf(false) }
+
+
+    val expanded = remember{ mutableStateOf(true) }
 
     Column (modifier = Modifier.fillMaxWidth())
     {
@@ -97,11 +80,10 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
             colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
             shape = RoundedCornerShape(20.dp),
             onClick = {
-                scope.launch{
-                    PokeElement.detailPokemon.value = hubViewModel.executeGetPokemonById(hubViewModel.extraireEntier(poked.pokemon.url)!!)
-                    if (expanded.value) expanded.value = false else expanded.value = true
 
-                }
+                   if (expanded.value) expanded.value = false else expanded.value = true
+
+
             },
 
             modifier = Modifier
@@ -116,21 +98,33 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
 
             Column (modifier = Modifier.fillMaxWidth())
             {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, top = 20.dp, bottom = 20.dp)
-                ){
-                    Text(text = poked.pokemon.name, fontSize = 30.sp, fontFamily = FontFamily.Serif, color = Color.White)
-                    Icon(imageVector = if(expanded.value) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown, contentDescription ="", modifier = Modifier.size(40.dp) )
+
+                Row {
+                    AsyncImage(
+                        alignment = Alignment.Center,
+                        model = hubViewModel._detailPokemon.value.sprites.other.home.front_default,
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp)
+                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 10.dp, top = 20.dp, bottom = 20.dp)
+                    ){
+                        Text(text = hubViewModel._detailPokemon.value.name, fontSize = 30.sp, fontFamily = FontFamily.Serif, color = Color.White)
+                        Icon(imageVector = if(expanded.value) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown, contentDescription ="", modifier = Modifier.size(40.dp) )
+
+                    }
 
                 }
 
+
                 AnimatedVisibility(
                     expanded.value,
-                    enter = expandIn(expandFrom = Alignment.TopStart),
-                    exit = shrinkOut(shrinkTowards = Alignment.BottomEnd)
+                    enter = expandIn(expandFrom = Alignment.TopCenter),
+                    exit = shrinkOut(shrinkTowards = Alignment.BottomCenter)
 
                 )
                 {
@@ -153,7 +147,7 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
 
                                     AsyncImage(
                                         alignment = Alignment.Center,
-                                        model = PokeElement._detailPokemon.value.sprites.other.official_artwork.front_shiny,
+                                        model = hubViewModel._detailPokemon.value.sprites.other.home.front_default,
                                         contentDescription = null,
                                         modifier = Modifier.fillMaxSize()
                                     )
@@ -170,9 +164,9 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
 
                                     Column (modifier = Modifier.padding(20.dp))
                                     {
-                                        Text(text = poked.pokemon.name, fontSize = 20.sp, color = Color.White)
-                                        Text(text = "Species : ${PokeElement._detailPokemon.value.species.name}", color = Color.White)
-                                        Text(text = "Order : ${PokeElement._detailPokemon.value.order}", color = Color.White)
+                                        Text(text = hubViewModel._detailPokemon.value.name, fontSize = 20.sp, color = Color.White)
+                                        Text(text = "Species : ${hubViewModel._detailPokemon.value.species.name}", color = Color.White)
+                                        Text(text = "Order : ${hubViewModel._detailPokemon.value.order}", color = Color.White)
 
                                     }
 
@@ -205,7 +199,7 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
                                             Text(text = "Height", color= Color.White)
                                         Spacer(modifier = Modifier.size(10.dp))
                                             Icon(painter = painterResource(id = R.drawable.hauteur_du_texte256), contentDescription ="height",modifier = Modifier.size(50.dp) , tint = Color.White)
-                                            Text(text = "${PokeElement._detailPokemon.value.height}", color = Color.White)
+                                            Text(text = "${hubViewModel._detailPokemon.value.height}", color = Color.White)
                                     }
 
                                     Column (
@@ -215,7 +209,7 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
                                         Text(text = "Weight", color= Color.White)
                                         Spacer(modifier = Modifier.size(10.dp))
                                         Icon(painter = painterResource(id = R.drawable.echelle_de_poids256), contentDescription ="weight" ,modifier = Modifier.size(50.dp), tint = Color.White)
-                                        Text(text = "${PokeElement._detailPokemon.value.weight}", color = Color.White)
+                                        Text(text = "${hubViewModel._detailPokemon.value.weight}", color = Color.White)
                                     }
 
                                     Column (
@@ -225,7 +219,7 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
                                         Text(text = "Experience", color= Color.White)
                                         Spacer(modifier = Modifier.size(10.dp))
                                         Icon(painter = painterResource(id = R.drawable.experience256), contentDescription ="base_experience", modifier = Modifier.size(50.dp) , tint = Color.White)
-                                        Text(text = "${PokeElement._detailPokemon.value.base_experience}", color = Color.White)
+                                        Text(text = "${hubViewModel._detailPokemon.value.base_experience}", color = Color.White)
                                     }
 
                                 }
@@ -246,7 +240,7 @@ fun PokeElement(poked : Poked, hubViewModel: HubViewModel, scope : CoroutineScop
                                     Text(text = "Moves", color= Color.White)
                                     Spacer(modifier = Modifier.size(10.dp))
                                     LazyRow {
-                                        items(PokeElement._detailPokemon.value.moves)
+                                        items(hubViewModel._detailPokemon.value.moves)
                                         {move->
                                             Column (horizontalAlignment = Alignment.CenterHorizontally,
                                                     verticalArrangement = Arrangement.Center,
