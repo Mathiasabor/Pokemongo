@@ -1,8 +1,8 @@
 package com.abor.myapplication.VUES.Splash
 
 /*
-* Ce composant est la page qui s'affiche juste avant de rentrer dans l'appli
-* et il sert aussi de background
+*Splash 2 affiche sur le détail de chaque page l'image du pokemon en background
+* Splash 3 sert de launching page
 *
 * */
 
@@ -19,39 +19,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.abor.pokemongo.R
 
 
-@Composable
-
-fun Splash (){
-
-    Box (modifier = Modifier.fillMaxSize()){
-
-        Image(painter = painterResource(id = R.drawable.pokemon_symbole),
-            contentDescription ="poke",
-            contentScale = ContentScale.FillBounds,
-
-            modifier = Modifier.fillMaxSize()
-
-        )
-    }
-
-}
-
 
 @Composable
 
-fun Splash2 (){
+fun Splash2 (url : String){
 
     Box (modifier = Modifier.fillMaxSize()){
 
-        Image(painter = painterResource(id = R.drawable.personagepoke),
-            contentDescription ="poke",
-            contentScale = ContentScale.FillBounds,
 
+        AsyncImage(
+            alignment = Alignment.Center,
+            model = url,
+            contentDescription = null,
             modifier = Modifier.fillMaxSize()
-
         )
 
 

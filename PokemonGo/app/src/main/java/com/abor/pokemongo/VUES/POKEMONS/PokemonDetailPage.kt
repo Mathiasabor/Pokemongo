@@ -29,14 +29,16 @@ import com.abor.pokemongo.VIEWMODEL.HubViewModel
 import com.abor.pokemongo.VUES.POKEMONS.Component.PokeElement
 import com.abor.pokemongo.VUES.ROUTES.Routes
 
-
+/*
+* ici c'est la page qui affiche le détail de chaque pokemon
+* */
 @Composable
 
 fun PokemonDetailPage( Nav : NavController, hubViewModel: HubViewModel)
 {
     Box (modifier = Modifier.fillMaxSize())
     {
-        Splash2()
+        Splash2(hubViewModel._detailPokemon.value.sprites.other.home.front_default)
 
         Column {
 
@@ -46,24 +48,25 @@ fun PokemonDetailPage( Nav : NavController, hubViewModel: HubViewModel)
                     .fillMaxWidth()
             ){
                 Column(
-
-                    modifier = Modifier
-                        .padding(20.dp)
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(20.dp)
                 )
                 {
 
-                    IconButton(onClick = { Nav.navigate(Routes.welcome.destination){
-                        popUpTo(Routes.welcome.destination)
-                    }
-                    }) {
-                        Image(painter = painterResource(id = R.drawable.accueil), contentDescription =null )
-                    }
+                   Row {
+                       IconButton(onClick = { Nav.navigate(Routes.welcome.destination){
+                           popUpTo(Routes.welcome.destination) }
+                       })
+                       {
+                           Image(painter = painterResource(id = R.drawable.en_arriere), contentDescription ="Back" )
+                       }
+
+                       Text(text = "Back", fontSize = 20.sp, modifier = Modifier.padding(start = 5.dp, top = 10.dp), color = Color.White, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold)
+
+                   }
                 }
 
-                Column(
-                    horizontalAlignment = Alignment.End,
-                    modifier = Modifier
-                        .padding(20.dp)
+                Column(horizontalAlignment = Alignment.End, modifier = Modifier.padding(20.dp)
                 )
                 {
                     Text(text = hubViewModel._horizontalGradient.value, fontSize = 30.sp, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold, color = Color.White)
@@ -71,8 +74,8 @@ fun PokemonDetailPage( Nav : NavController, hubViewModel: HubViewModel)
 
             }
 
-            Column ( modifier = Modifier
-                .padding(20.dp)){
+            Column ( modifier = Modifier.padding(20.dp))
+            {
                 PokeElement(hubViewModel)
             }
 

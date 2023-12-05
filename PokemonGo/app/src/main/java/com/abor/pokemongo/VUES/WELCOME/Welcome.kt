@@ -1,6 +1,6 @@
 package com.abor.myapplication.VUES.Welcome
 /*
-* Ce composant est la page qui affiche la liste des types de pokemons
+* Ce composant est la page qui affiche la liste des pokemons par types
 *
 * */
 
@@ -26,10 +26,10 @@ import androidx.compose.runtime.Composable
 
 
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
+
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
+
 
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 import androidx.navigation.NavController
-import com.abor.myapplication.VUES.Splash.Splash
+
 
 import com.abor.myapplication.VUES.Welcome.Component.PokeType2
 
@@ -55,7 +55,7 @@ fun Welcome(hubViewModel : HubViewModel, scope: CoroutineScope, nav : NavControl
 {
     Box(modifier = Modifier.fillMaxSize())
     {
-        Splash()
+
         Column (modifier = Modifier.fillMaxSize())
         {
             val modifier2 = Modifier
@@ -70,14 +70,13 @@ fun Welcome(hubViewModel : HubViewModel, scope: CoroutineScope, nav : NavControl
             {
                 Column(modifier = Modifier.padding(20.dp))
                 {
-                    Text(text = "PokéMoN HUB", fontSize = 30.sp, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold, style = TextStyle(brush = Brush.horizontalGradient(
-                        listOf(Color.Yellow, Color.Cyan, Color.Red, Color.White))))
+                    Text(text = "Poké", fontSize = 30.sp, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold, color = Color.White)
 
                 }
 
                 Column(modifier = Modifier.padding(20.dp))
                 {
-                    Image(painter = painterResource(id = R.drawable.pokeball), contentDescription =null )
+                    Image(painter = painterResource(id = R.drawable.pokeball128), contentDescription =null )
                 }
             }
 
@@ -91,7 +90,16 @@ fun Welcome(hubViewModel : HubViewModel, scope: CoroutineScope, nav : NavControl
                     items(hubViewModel._pokemonsbytypelist.value)
                     {pokemons->
 
-                        Text(text = pokemons.name, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, modifier = Modifier.padding(top = 5.dp))
+
+                        Row (horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.padding(top = 5.dp).fillMaxWidth()
+                        ){
+
+                            Text(text = pokemons.name, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color =Color.Black)
+                            Text(text = "${pokemons.pokemon.size}", fontWeight = FontWeight.SemiBold, fontSize = 20.sp, color =Color.Black)
+
+                        }
+
 
                         LazyRow{
                             items(pokemons.pokemon){poked->

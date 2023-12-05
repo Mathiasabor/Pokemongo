@@ -73,7 +73,7 @@ fun PokeElement( hubViewModel: HubViewModel)
 {
 
 
-    val expanded = remember{ mutableStateOf(true) }
+    val expanded = remember{ mutableStateOf(false) }
 
     Column (modifier = Modifier.fillMaxWidth())
     {

@@ -36,7 +36,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 /*
-* Ce composant poketype va afficher l'aperçu des types des pokemon
+* Ce composant poketype va afficher l'aperçu  des pokemon dans la liste
 *
 * */
 

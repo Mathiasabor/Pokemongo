@@ -1,7 +1,9 @@
 package com.abor.pokemongo.VUES.WELCOME.Component
 
 import androidx.compose.ui.graphics.Color
-
+/*
+* ici une liste des degradé pour chaque types
+* */
 object ColorType {
 
 
