@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 
 import androidx.compose.material3.Surface
@@ -137,7 +138,7 @@ fun PokeElement( hubViewModel: HubViewModel)
                     {
                         Column {
                             Row {
-                                Card(
+                                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
                                     shape = RoundedCornerShape(20.dp),
                                     modifier = Modifier
                                         .height(150.dp)
@@ -154,7 +155,7 @@ fun PokeElement( hubViewModel: HubViewModel)
 
                                 }
 
-                                Card(
+                                Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
                                     shape = RoundedCornerShape(20.dp),
                                     modifier = Modifier
                                         .height(150.dp)
@@ -175,7 +176,7 @@ fun PokeElement( hubViewModel: HubViewModel)
                             }
 
 
-                            Card(
+                            Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
                                 shape = RoundedCornerShape(20.dp),
                                 modifier = Modifier
                                     .height(150.dp)
@@ -226,7 +227,7 @@ fun PokeElement( hubViewModel: HubViewModel)
 
                             }
 
-                            Card(
+                            Card(colors = CardDefaults.cardColors(containerColor = Color.DarkGray),
                                 shape = RoundedCornerShape(20.dp),
                                 modifier = Modifier
                                     .height(150.dp)

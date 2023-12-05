@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,13 +43,15 @@ class MainActivity : ComponentActivity() {
 
     var dest = mutableStateOf(Routes.welcome.destination)
 
-    @SuppressLint("UnrememberedMutableState")
+    @OptIn(ExperimentalMaterial3Api::class)
+    @SuppressLint("UnrememberedMutableState", "UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val hubViewModel = HubViewModel()
             val scope: CoroutineScope = rememberCoroutineScope()
             val navController = rememberNavController()
+
 
             dest.value = Routes.splash.destination
             LaunchedEffect(true ){
@@ -62,33 +66,35 @@ class MainActivity : ComponentActivity() {
                 }
 
             }
-            PokemonGoTheme {
-
-                NavHost(navController = navController, startDestination = dest.value )
-                {
-
-                   composable(Routes.welcome.destination)
-                   {
-                       Welcome( hubViewModel, scope, navController)
-
-
-                   }
-
-
-                    composable(Routes.splash.destination)
+          // PokemonGoTheme {
+                Scaffold {
+                    NavHost(navController = navController, startDestination = dest.value )
                     {
-                        Splash3 ()
+
+                        composable(Routes.welcome.destination)
+                        {
+                            Welcome( hubViewModel, scope, navController)
+
+
+                        }
+
+
+                        composable(Routes.splash.destination)
+                        {
+                            Splash3 ()
+                        }
+
+                        composable(Routes.pokemonDetailPage.destination)
+                        {
+                            PokemonDetailPage( navController,hubViewModel)
+                        }
+
+
                     }
-
-                    composable(Routes.pokemonDetailPage.destination)
-                    {
-                        PokemonDetailPage( navController,hubViewModel)
-                    }
-
-
                 }
 
-            }
+
+         //  }
 
 
         }

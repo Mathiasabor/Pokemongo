@@ -71,7 +71,7 @@ fun Welcome(hubViewModel : HubViewModel, scope: CoroutineScope, nav : NavControl
                 Column(modifier = Modifier.padding(20.dp))
                 {
                     Text(text = "PokéMoN HUB", fontSize = 30.sp, fontFamily = FontFamily.Cursive, fontWeight = FontWeight.SemiBold, style = TextStyle(brush = Brush.horizontalGradient(
-                        listOf(Color.Yellow, Color.Cyan, Color.Red))))
+                        listOf(Color.Yellow, Color.Cyan, Color.Red, Color.White))))
 
                 }
 
